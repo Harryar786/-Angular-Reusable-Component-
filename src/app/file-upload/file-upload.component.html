@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload Component</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .upload-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 500px;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        .file-input {
+            display: none;
+        }
+        .file-label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .file-label:hover {
+            background-color: #0056b3;
+        }
+        .file-section {
+            margin-top: 1.5rem;
+        }
+        .file-details {
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .file-details h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        .file-details ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .file-details li {
+            margin-bottom: 0.5rem;
+        }
+        .upload-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .upload-button:hover {
+            background-color: #218838;
+        }
+        .status {
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+        .status p {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-container">
+        <h2>File Upload</h2>
+        <label for="fileUpload" class="file-label">
+            Choose a file
+        </label>
+        <input id="fileUpload" type="file" class="file-input" (change)="onChange($event)" #fileUpload />
+        
+        <div *ngIf="files.length" class="file-section">
+            <div *ngFor="let file of files" class="file-details">
+                <h3>File details:</h3>
+                <ul>
+                    <li><strong>Name:</strong> {{file.name}}</li>
+                    <li><strong>Type:</strong> {{file.type}}</li>
+                    <li><strong>Size:</strong> {{file.size}} bytes</li>
+                </ul>
+            </div>
+            
+            <button (click)="onUpload()" class="upload-button">Upload the file</button>
+            
+            <div class="status" [ngSwitch]="status">
+                <p *ngSwitchCase="'uploading'">⏳ Uploading...</p>
+                <p *ngSwitchCase="'success'">✅ Upload complete!</p>
+                <p *ngSwitchCase="'fail'">❌ Upload failed. Please try again.</p>
+                <p *ngSwitchDefault>😶 Waiting to upload...</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<!-- 
+<div *ngIf="file">
+  <section class="file-info">
+    File details:
+    <ul>
+      <li>Name: {{file.name}}</li>
+      <li>Type: {{file.type}}</li>
+      <li>Size: {{file.size}} bytes</li>
+    </ul>
+  </section>
+
+  <button (click)="onUpload()">Upload the file</button>
+
+  <section [ngSwitch]="status">
+    <p *ngSwitchCase="'uploading'">⏳ Uploading...</p>
+    <p *ngSwitchCase="'success'">✅ Done!</p>
+    <p *ngSwitchCase="'fail'">❌ Error!</p>
+    <p *ngSwitchDefault>😶 Waiting to upload...</p>
+  </section>
+</div> -->
